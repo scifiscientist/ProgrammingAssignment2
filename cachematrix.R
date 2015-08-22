@@ -9,15 +9,29 @@
 ## set the value of the inverse of the matrix
 ## and get the value of the inverse of the matrix
 
-makeCacheMatrix <- function(x = matrix()) {
+makeCacheMatrix <- function(x = matrix()) 
+{
         invMat <- NULL
-        set <- function(y) {
-                x <<- y
-                invMat <<- NULL
-        }
+        
+        ##sets the values in the matrix and resets the inverse matrix object
+        ##to NULL
+        set <- function(y) 
+                {
+                        x <<- y
+                        invMat <<- NULL
+                }
+        
+        
+        ##gets(fetches) the matrix
         get <- function() x
+        
+        ##sets the values in the inverse matrix object based on its computation
+        ##in the CacheSolve function
         setInvMat <- function(inverse) invMat <<- inverse
+        
+        ##gets(fetches) the inverse matrix
         getInvMat <- function() invMat
+        
         list(set = set, get = get,
              setInvMat = setInvMat,
              getInvMat = getInvMat)
@@ -32,15 +46,30 @@ makeCacheMatrix <- function(x = matrix()) {
 ## matrix and sets the value of the inverse matrix in the cache via the 
 ## setInvMat function.
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(x, ...) 
+{
+        ## Returns a matrix that is the inverse of 'x' by calling the 
+        ## getInvMat() function of the makeCacheMatrix() function
         invMat <- x$getInvMat()
-        if(!is.null(invMat)) {
+
+        ## If cached data is present, returns the same        
+        if(!is.null(invMat)) 
+        {
                 message("getting cached data")
                 return(invMat)
         }
+        
+        ## if cached data is not present, fetches the matrix values by calling 
+        ## the get() function of the makeCacheMatrix() function
         data <- x$get()
+        
+        ## computes the values in the inverse matrix using the solve() function
         invMat <- solve(data, ...)
+        
+        ## stores the computed inverse matrix values in cache using the 
+        ## setInvMat() function of the makeCacheMatrix() function
         x$setInvMat(invMat)
+        
+        ## returns the inverse matrix values 
         invMat
 }
