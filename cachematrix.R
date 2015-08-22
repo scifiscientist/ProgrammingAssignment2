@@ -48,22 +48,23 @@ makeCacheMatrix <- function(x = matrix())
 
 cacheSolve <- function(x, ...) 
 {
-        ## Returns a matrix that is the inverse of 'x' by calling the 
-        ## getInvMat() function of the makeCacheMatrix() function
+        ##Sets variable invMat, which is the object to store the inverse matrix,
+        ##by calling the getInvMat() function of the makeCacheMatrix() function
         invMat <- x$getInvMat()
 
-        ## If cached data is present, returns the same        
+        ##If cached data is present (ie., invMat is not null), returns the same        
         if(!is.null(invMat)) 
         {
                 message("getting cached data")
                 return(invMat)
         }
         
-        ## if cached data is not present, fetches the matrix values by calling 
-        ## the get() function of the makeCacheMatrix() function
+        ## if cached data is not present (ie., invMat is null), fetches the 
+        ## matrix values by calling the get() function of the 
+        ## makeCacheMatrix() function
         data <- x$get()
         
-        ## computes the values in the inverse matrix using the solve() function
+        ## computes the values in the inverse matrix using R's solve() function
         invMat <- solve(data, ...)
         
         ## stores the computed inverse matrix values in cache using the 
